@@ -408,7 +408,8 @@ void BluetoothA2DPSource::filter_inquiry_scan_result(
   }
   /* search for device with MAJOR service class as "rendering" in COD */
   if (!esp_bt_gap_is_valid_cod(cod) ||
-      !(esp_bt_gap_get_cod_srvc(cod) & ESP_BT_COD_SRVC_RENDERING)) {
+      !(esp_bt_gap_get_cod_srvc(cod) & ESP_BT_COD_SRVC_RENDERING) ||
+      !(esp_bt_gap_get_cod_srvc(cod) & ESP_BT_COD_SRVC_AUDIO)) {
     ESP_LOGI(BT_AV_TAG, "--Compatiblity: Incompatible");
     return;
   }
@@ -896,7 +897,7 @@ void BluetoothA2DPSource::bt_app_rc_ct_cb(esp_avrc_ct_cb_event_t event,
   case ESP_AVRC_CT_REMOTE_FEATURES_EVT:
 #if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 0, 0)
   case ESP_AVRC_CT_GET_RN_CAPABILITIES_RSP_EVT:
-  case ESP_AVRC_CT_SET_ABSOLUTE_VOLUME_RSP_EVT: 
+  case ESP_AVRC_CT_SET_ABSOLUTE_VOLUME_RSP_EVT:
 #endif
   {
     bt_app_work_dispatch(ccall_bt_av_hdl_avrc_ct_evt, event, param,
