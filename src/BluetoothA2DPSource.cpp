@@ -409,7 +409,7 @@ void BluetoothA2DPSource::filter_inquiry_scan_result(
   /* search for device with MAJOR service class as "rendering" in COD */
   if (!esp_bt_gap_is_valid_cod(cod) ||
       !(esp_bt_gap_get_cod_srvc(cod) & ESP_BT_COD_SRVC_RENDERING) ||
-      !(esp_bt_gap_get_cod_srvc(cod) & ESP_BT_COD_SRVC_AUDIO)) {
+      !(esp_bt_gap_get_cod_major_dev(cod) & ESP_BT_COD_MAJOR_DEV_AV)) {
     ESP_LOGI(BT_AV_TAG, "--Compatiblity: Incompatible");
     return;
   }
